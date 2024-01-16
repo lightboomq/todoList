@@ -15,14 +15,13 @@ body{
         padding-bottom: 50px;
         margin-top: 50px;
         border-radius: 10px;
-        padding-left: 20px;
         .block-todoList{
             display: flex;
             h3{
                 color: #192C55;
                 font-size: 24px;
             }
-        }
+        };
         .block-input-and-buttonAdd{
             display: flex;
             input{
@@ -32,9 +31,10 @@ body{
                 margin-top: 10px;
                 margin-right: 70px;
                 border-radius: 10px 0 0 10px;
-                padding-left: 10px;
+                padding-left: 20px;
+                margin-left: 20px;
                 background-color: #EAEDEE;
-            }
+            };
             .btn-add{
                 all:unset;
                 position: absolute;
@@ -50,10 +50,10 @@ body{
                 background-color: #FF643A;
                 border-radius: 30px;
                 cursor: pointer;
-            }
+            };
             input::placeholder{
                color: #9D9FA0;
-            }
+            };
         }
         h3{
             margin-top: 10px;
@@ -67,6 +67,9 @@ body{
             li{
                 font-size: 30px;
                 cursor: pointer;
+            }
+            li::marker{
+                font-size: 23px;
             }
         }
         .block-remove-complete{
