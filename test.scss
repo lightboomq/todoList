@@ -1,0 +1,108 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: #3C216C;
+    .main{
+        position: relative;
+        display: flex;
+        margin: auto;
+        flex-direction: column;
+        background-color: white;
+        align-items: center;
+        max-width: 400px;
+        padding-bottom: 50px;
+        margin-top: 50px;
+        border-radius: 10px;
+        .block-todoList{
+            display: flex;
+            h3{
+                color: #192C55;
+                font-size: 24px;
+            }
+        }
+        .block-input-and-buttonAdd{
+            display: flex;
+            input{
+                all: unset;
+                width: 300px;
+                height: 40px;
+                margin-top: 10px;
+                margin-right: 70px;
+                border-radius: 10px 0 0 10px;
+                padding-left: 10px;
+                background-color: #EAEDEE;
+            }
+            .btn-add{
+                all:unset;
+                position: absolute;
+                right: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 500;
+                color: white;
+                width: 30%;
+                height: 40px;
+                margin-top: 10px;
+                background-color: #FF643A;
+                border-radius: 30px;
+                cursor: pointer;
+            }
+            input::placeholder{
+               color: #9D9FA0;
+            }
+        }
+        h3{
+            margin-top: 10px;
+        }
+        
+        ol{
+            width: 80%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            overflow-wrap: break-word;
+            li{
+                font-size: 30px;
+                cursor: pointer;
+            }
+        }
+        .block-remove-complete{
+               display: flex;
+               width: 80%;
+               height: 150px;
+               justify-content: center;
+            .btn-remove{
+                all: unset;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 35px;
+                background-color: rgb(148, 46, 46);
+                color: white;
+                font-weight: 400;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                width: 100px;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+            .btn-complete{
+                all: unset;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 35px;
+                background-color: rgb(53, 134, 28);
+                color: white;
+                font-weight: 400;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                width: 100px;
+                cursor: pointer;
+            }
+        }       
+        
+    }
+}

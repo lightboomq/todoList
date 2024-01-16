@@ -1,0 +1,110 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #3C216C;
+}
+body .main {
+  position: relative;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
+  max-width: 400px;
+  padding-bottom: 50px;
+  margin-top: 50px;
+  border-radius: 10px;
+}
+body .main .block-todoList {
+  display: flex;
+}
+body .main .block-todoList h3 {
+  color: #192C55;
+  font-size: 24px;
+}
+body .main .block-input-and-buttonAdd {
+  display: flex;
+}
+body .main .block-input-and-buttonAdd input {
+  all: unset;
+  width: 300px;
+  height: 40px;
+  margin-top: 10px;
+  margin-right: 70px;
+  border-radius: 10px 0 0 10px;
+  padding-left: 10px;
+  background-color: #EAEDEE;
+}
+body .main .block-input-and-buttonAdd .btn-add {
+  all: unset;
+  position: absolute;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  color: white;
+  width: 30%;
+  height: 40px;
+  margin-top: 10px;
+  background-color: #FF643A;
+  border-radius: 30px;
+  cursor: pointer;
+}
+body .main .block-input-and-buttonAdd input::-moz-placeholder {
+  color: #9D9FA0;
+}
+body .main .block-input-and-buttonAdd input::placeholder {
+  color: #9D9FA0;
+}
+body .main h3 {
+  margin-top: 10px;
+}
+body .main ol {
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow-wrap: break-word;
+}
+body .main ol li {
+  font-size: 30px;
+  cursor: pointer;
+}
+body .main .block-remove-complete {
+  display: flex;
+  width: 80%;
+  height: 150px;
+  justify-content: center;
+}
+body .main .block-remove-complete .btn-remove {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  background-color: rgb(148, 46, 46);
+  color: white;
+  font-weight: 400;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  width: 100px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+body .main .block-remove-complete .btn-complete {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  background-color: rgb(53, 134, 28);
+  color: white;
+  font-weight: 400;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  width: 100px;
+  cursor: pointer;
+}/*# sourceMappingURL=test.css.map */
