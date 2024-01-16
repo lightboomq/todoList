@@ -30,13 +30,12 @@ body .main .block-input-and-buttonAdd {
 }
 body .main .block-input-and-buttonAdd input {
   all: unset;
-  width: 300px;
+  width: 280px;
   height: 40px;
   margin-top: 10px;
   margin-right: 70px;
   border-radius: 10px 0 0 10px;
   padding-left: 20px;
-  margin-left: 20px;
   background-color: #EAEDEE;
 }
 body .main .block-input-and-buttonAdd .btn-add {
