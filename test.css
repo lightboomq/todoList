@@ -17,6 +17,7 @@ body .main {
   padding-bottom: 50px;
   margin-top: 50px;
   border-radius: 10px;
+  padding-left: 20px;
 }
 body .main .block-todoList {
   display: flex;
