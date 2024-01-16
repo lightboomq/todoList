@@ -88,9 +88,9 @@ btnComplete.addEventListener('click',()=>{
             tags[i].color='black'
             tags[i].textDecoration='line-through';      
         }
+        localStorageObj=JSON.stringify(tags)
+        localStorage.setItem('localStorageObj',localStorageObj);
     }
-    localStorageObj=JSON.stringify(tags)
-    localStorage.setItem('localStorageObj',localStorageObj);
 });
 function cicleByDeclension(){
     for(let i=keyDeclension; i>0; i--){
