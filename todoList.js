@@ -12,7 +12,14 @@ let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('k
 let tags = [];
 let strTasks
 
-window.screen.width<600?main.style.marginTop='0px':main.style.marginTop='50px';
+if(window.screen.width<600){
+    main.style.marginTop='0px'
+    main.style.paddingLeft='20px'
+}
+else{
+    main.style.marginTop='50px';
+}
+
 
 cicleByDeclension();
 let li;

@@ -13,7 +13,6 @@ body{
         align-items: center;
         max-width: 400px;
         padding-bottom: 50px;
-        //margin-top: 50px;
         border-radius: 10px;
         .block-todoList{
             display: flex;
@@ -80,6 +79,7 @@ body{
                 font-size: 25px;
                 margin-top: 5px;
                 cursor: pointer;
+                
             }
             li::marker{
                 font-size: 23px;
