@@ -28,15 +28,27 @@ body .main .block-todoList h3 {
 body .main .block-input-and-buttonAdd {
   display: flex;
 }
-body .main .block-input-and-buttonAdd input {
-  all: unset;
-  width: 260px;
+body .main .block-input-and-buttonAdd .block-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #EAEDEE;
+  width: 300px;
   height: 40px;
   margin-top: 10px;
   margin-right: 70px;
   border-radius: 10px 0 0 10px;
-  padding-left: 20px;
-  background-color: #EAEDEE;
+}
+body .main .block-input-and-buttonAdd .block-input input {
+  all: unset;
+  width: 200px;
+  height: 40px;
+  padding-left: 15px;
+}
+body .main .block-input-and-buttonAdd .block-input .clear-input {
+  margin-right: 60px;
+  opacity: 0;
+  cursor: pointer;
 }
 body .main .block-input-and-buttonAdd .btn-add {
   all: unset;
@@ -70,7 +82,7 @@ body .main ol {
   overflow-wrap: break-word;
 }
 body .main ol li {
-  font-size: 30px;
+  font-size: 25px;
   cursor: pointer;
 }
 body .main ol li::marker {
@@ -109,5 +121,12 @@ body .main .block-remove-complete .btn-complete {
   border-radius: 10px;
   margin-bottom: 10px;
   width: 100px;
+  cursor: pointer;
+}
+body .main .block-li {
+  display: flex;
+  justify-content: space-between;
+}
+body .main .block-li img {
   cursor: pointer;
 }/*# sourceMappingURL=test.css.map */

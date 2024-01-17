@@ -24,16 +24,29 @@ body{
         };
         .block-input-and-buttonAdd{
             display: flex;
-            input{
-                all: unset;
-                width: 260px;
+            .block-input{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #EAEDEE;
+                width: 300px;
                 height: 40px;
                 margin-top: 10px;
                 margin-right: 70px;
                 border-radius: 10px 0 0 10px;
-                padding-left: 20px;
-                background-color: #EAEDEE;
-            };
+                input{
+                    all: unset;
+                    width: 200px;
+                    height: 40px;
+                    padding-left: 15px; 
+                };
+                .clear-input{
+                    margin-right: 60px;
+                    opacity: 0;
+                    cursor: pointer;
+                }
+            }
+            
             .btn-add{
                 all:unset;
                 position: absolute;
@@ -64,7 +77,7 @@ body{
             margin-bottom: 20px;
             overflow-wrap: break-word;
             li{
-                font-size: 30px;
+                font-size: 25px;
                 cursor: pointer;
             }
             li::marker{
@@ -106,6 +119,12 @@ body{
                 cursor: pointer;
             }
         }       
-        
+        .block-li{
+            display: flex;
+            justify-content: space-between;
+            img{
+                cursor: pointer;
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ const btnRemove = document.getElementById('btn-remove');
 const btnComplete = document.getElementById('btn-complete');
 const ol = document.getElementById('todo-list');
 const main = document.querySelector('main');
+const clearInput = document.querySelector('.clear-input')
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
@@ -39,11 +40,10 @@ getTitleTasks();
 btnAdd.addEventListener('click',(e)=>{
     if(input.value.length<=3) return; 
     if(tags.find(item=>item.text===input.value)) return;
-    tags.push({text:input.value});
+    tags.push({text:input.value,pencil:'./pencil.svg'});        
     li = document.createElement('li');
-    br = document.createElement('br')
     li.innerHTML = input.value;
-    //ol.append(li);
+    let img = document.createElement('img');
     ol.append(li)
     localStorageObj=JSON.stringify(tags);
     localStorage.setItem('localStorageObj',localStorageObj)
@@ -51,15 +51,16 @@ btnAdd.addEventListener('click',(e)=>{
     localStorage.setItem('keyDeclension',keyDeclension)
     getTitleTasks();
     input.value = '';
-    
+    clearInput.style.opacity='0';
 });
 
 ol.addEventListener('click',(e)=>{
-    let index;    
-    index = tags.findIndex(item=>item.text===e.target.textContent)
+    
+    let index = tags.findIndex(item=>item.text===e.target.textContent)
     tags[index].tag=e.target
     tags[index].flag=!tags[index].flag,   
     tags[index].flag?tags[index].tag.style.color='blue':tags[index].tag.style.color='black';
+    
 })
   
 btnRemove.addEventListener('click',()=>{
@@ -88,9 +89,10 @@ btnComplete.addEventListener('click',()=>{
             tags[i].color='black'
             tags[i].textDecoration='line-through';      
         }
-        localStorageObj=JSON.stringify(tags)
-        localStorage.setItem('localStorageObj',localStorageObj);
     }
+    localStorageObj=JSON.stringify(tags)
+    localStorage.setItem('localStorageObj',localStorageObj);
+    
 });
 function cicleByDeclension(){
     for(let i=keyDeclension; i>0; i--){
@@ -115,3 +117,12 @@ function getTitleTasks(){
         h3.textContent = `${tags.length} ${strTasks=declension[keyDeclension]}`;
     }
 }
+input.addEventListener('input',()=>{
+    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
+})
+clearInput.addEventListener('click',()=>{
+    input.value = '';
+    clearInput.style.opacity='0';
+})
+
+
