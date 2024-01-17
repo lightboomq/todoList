@@ -3,7 +3,6 @@
     margin: 0;
 }
 body{
-    
     .main{
         position: relative;
         display: flex;
@@ -14,7 +13,7 @@ body{
         align-items: center;
         max-width: 400px;
         padding-bottom: 50px;
-        margin-top: 50px;
+        //margin-top: 50px;
         border-radius: 10px;
         .block-todoList{
             display: flex;

@@ -4,20 +4,18 @@ const btnAdd  = document.getElementById('btn-add');
 const btnRemove = document.getElementById('btn-remove');
 const btnComplete = document.getElementById('btn-complete');
 const ol = document.getElementById('todo-list');
-const main = document.querySelector('main');
+const main = document.querySelector('.main');
 const clearInput = document.querySelector('.clear-input')
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
-
-
 let tags = [];
 let strTasks
 
+window.screen.width<600?main.style.marginTop='0px':main.style.marginTop='50px';
 
 cicleByDeclension();
 let li;
-
 let localStorageObj;
 if(localStorage.length>=1){
     tags=JSON.parse(localStorage.getItem('localStorageObj'));
