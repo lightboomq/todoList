@@ -14,7 +14,6 @@ let strTasks
 
 if(window.screen.width<600){
     main.style.marginTop='0px'
-    main.style.paddingLeft='20px'
 }
 else{
     main.style.marginTop='50px';
@@ -48,7 +47,6 @@ btnAdd.addEventListener('click',(e)=>{
     tags.push({text:input.value,pencil:'./pencil.svg'});        
     li = document.createElement('li');
     li.innerHTML = input.value;
-    let img = document.createElement('img');
     ol.append(li)
     localStorageObj=JSON.stringify(tags);
     localStorage.setItem('localStorageObj',localStorageObj)
