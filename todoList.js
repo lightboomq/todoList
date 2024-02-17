@@ -35,18 +35,17 @@ if(localStorage.length>=1){
             li.style.textDecoration='line-through';
         }
         ol.append(li);
-        
     } 
 }
 getTitleTasks();
 
 
-btnAdd.addEventListener('click',(e)=>{
-    if(input.value.length<=3) return; 
+btnAdd.addEventListener('click',()=>{
+    if(input.value.length<=3) return;
     if(tags.find(item=>item.text===input.value)) return;
-    tags.push({text:input.value,pencil:'./pencil.svg'});        
+    tags.push({text:firstSymbolToUpperCase(input.value),pencil:'./pencil.svg'});      
     li = document.createElement('li');
-    li.innerHTML = input.value;
+    li.append(tags[tags.length-1].text) 
     ol.append(li)
     localStorageObj=JSON.stringify(tags);
     localStorage.setItem('localStorageObj',localStorageObj)
@@ -58,12 +57,10 @@ btnAdd.addEventListener('click',(e)=>{
 });
 
 ol.addEventListener('click',(e)=>{
-    
     let index = tags.findIndex(item=>item.text===e.target.textContent)
     tags[index].tag=e.target
     tags[index].flag=!tags[index].flag,   
     tags[index].flag?tags[index].tag.style.color='blue':tags[index].tag.style.color='black';
-    
 })
   
 btnRemove.addEventListener('click',()=>{
@@ -128,4 +125,15 @@ clearInput.addEventListener('click',()=>{
     clearInput.style.opacity='0';
 })
 
-
+function firstSymbolToUpperCase(inputValue){
+    let str='';
+    for(let i=0; i<inputValue.length; i++){
+        if(i===0){
+            str+=inputValue[i].toUpperCase();
+        }
+        else{
+            str+=inputValue[i];
+        }
+    }
+    return str;
+}
