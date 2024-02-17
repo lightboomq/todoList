@@ -74,18 +74,16 @@ body .main h3 {
   margin-top: 10px;
 }
 body .main ol {
-  width: 320px;
+  width: 350px;
   margin-top: 20px;
   margin-bottom: 20px;
   overflow-wrap: break-word;
 }
 body .main ol li {
-  font-size: 20px;
-  margin-top: 5px;
+  font-size: 21px;
+  margin-top: 10px;
   cursor: pointer;
-}
-body .main ol li::marker {
-  font-size: 23px;
+  list-style-type: none;
 }
 body .main .block-remove-complete {
   display: flex;

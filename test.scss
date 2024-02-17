@@ -72,17 +72,15 @@ body{
         }
         
         ol{
-            width: 320px;
+            width: 350px;
             margin-top: 20px;
             margin-bottom: 20px;
             overflow-wrap: break-word;
             li{
-                font-size: 20px;
-                margin-top: 5px;
+                font-size: 21px;
+                margin-top: 10px;
                 cursor: pointer;
-            }
-            li::marker{
-                font-size: 23px;
+                list-style-type: none;
             }
         }
         .block-remove-complete{
