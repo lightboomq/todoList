@@ -13,6 +13,7 @@ const declension = {0:'задач', 1:'задача',2:'задачи',3:'зад�
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
 let tags = [];
 let strTasks
+localStorage.getItem('localStorageObj')?visibleButtons():hiddenButtons();
 
 if(window.screen.width<600){
     main.style.marginTop='0px'
@@ -41,8 +42,13 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
+clearInput.addEventListener('click',()=>{
+    input.value = '';
+    clearInput.style.opacity='0';
+})
 
 btnAdd.addEventListener('click',()=>{
+    console.log(true);
     if(input.value.length<=3) return;
     if(tags.find(item=>item.text===input.value)) return;
     tags.push({text:firstSymbolToUpperCase(input.value),pencil:'./pencil.svg'});      
@@ -56,7 +62,16 @@ btnAdd.addEventListener('click',()=>{
     getTitleTasks();
     input.value = '';
     clearInput.style.opacity='0';
+    visibleButtons();
 });
+
+btnClearAll.addEventListener('click',()=>{
+    ol.innerHTML='';
+    localStorage.clear();
+    h3.textContent = `0 задач`;
+    hiddenButtons();
+    tags=[];
+})
 
 ol.addEventListener('click',(e)=>{
     let index = tags.findIndex(item=>item.text===e.target.textContent)
@@ -79,8 +94,15 @@ btnRemove.addEventListener('click',()=>{
     localStorage.setItem('localStorageObj',localStorageObj)
     cicleByDeclension()
     getTitleTasks();
-})
 
+    if(localStorage.getItem('localStorageObj')==='[]'||!localStorage.getItem('localStorageObj')){
+        hiddenButtons();
+    }
+    else{
+        visibleButtons();
+    }
+    
+})
 
 btnComplete.addEventListener('click',()=>{
     for(let i=0; i<tags.length; i++){
@@ -122,15 +144,7 @@ function getTitleTasks(){
 input.addEventListener('input',()=>{
     input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
 })
-btnClearAll.addEventListener('click',()=>{
-    ol.innerHTML='';
-    localStorage.clear();
-    h3.textContent = `0 задач`;
-})
-clearInput.addEventListener('click',()=>{
-    input.value = '';
-    clearInput.style.opacity='0';
-})
+
 
 function firstSymbolToUpperCase(inputValue){
     let str='';
@@ -159,3 +173,15 @@ function scrollToUp(){
       window.scroll(0,0)
     })
   }
+
+function hiddenButtons(){
+    btnClearAll.style.visibility='hidden';
+    btnComplete.style.visibility='hidden';
+    btnRemove.style.visibility='hidden';
+}
+
+function visibleButtons(){
+    btnClearAll.style.visibility='visible';
+    btnComplete.style.visibility='visible';
+    btnRemove.style.visibility='visible';
+}
