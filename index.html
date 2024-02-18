@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="test.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     <title>Document</title>
 </head>
 <body>
@@ -12,12 +15,16 @@
             <h3 class="h3-todoList">To-Do List&nbsp; </h3>
             <h3 id="h3-task">0 задач</h3>
         </div>
-        
+        <div class="block-input-and-button">
             <div class="block-input">
                 <input placeholder="Ваш текст..." id="input-task" type="text"/>
-                <!-- <img class="clear-input" src="./clear-input.svg"/> -->
-                <button class="btn-add" id="btn-add">Add</button>
+                <img class="clear-input" src="./clear-input.svg"/>
             </div>
+            <button class="btn-add" id="btn-add">Добавить</button>
+        </div>
+        <div class="clear-all-block">
+            <button class="clear-all">Очистить список</button>
+        </div>
         <ol id="todo-list"></ol>
         
         <div class="block-remove-complete">

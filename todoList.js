@@ -6,7 +6,7 @@ const btnComplete = document.getElementById('btn-complete');
 const ol = document.getElementById('todo-list');
 const main = document.querySelector('.main');
 const clearInput = document.querySelector('.clear-input')
-
+const btnClearAll = document.querySelector('.clear-all');
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
 let tags = [];
@@ -117,13 +117,17 @@ function getTitleTasks(){
         h3.textContent = `${tags.length} ${strTasks=declension[keyDeclension]}`;
     }
 }
-// input.addEventListener('input',()=>{
-//     input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
-// })
-// clearInput.addEventListener('click',()=>{
-//     input.value = '';
-//     clearInput.style.opacity='0';
-// })
+input.addEventListener('input',()=>{
+    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
+})
+btnClearAll.addEventListener('click',()=>{
+    ol.innerHTML='';
+    localStorage.clear();
+})
+clearInput.addEventListener('click',()=>{
+    input.value = '';
+    clearInput.style.opacity='0';
+})
 
 function firstSymbolToUpperCase(inputValue){
     let str='';
