@@ -117,13 +117,13 @@ function getTitleTasks(){
         h3.textContent = `${tags.length} ${strTasks=declension[keyDeclension]}`;
     }
 }
-input.addEventListener('input',()=>{
-    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
-})
-clearInput.addEventListener('click',()=>{
-    input.value = '';
-    clearInput.style.opacity='0';
-})
+// input.addEventListener('input',()=>{
+//     input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
+// })
+// clearInput.addEventListener('click',()=>{
+//     input.value = '';
+//     clearInput.style.opacity='0';
+// })
 
 function firstSymbolToUpperCase(inputValue){
     let str='';
