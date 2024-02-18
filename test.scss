@@ -5,7 +5,7 @@
 body{
     .main{
         display: flex;
-        max-width: 700px;
+        
         position: relative;
         margin: auto;
         flex-direction: column;
@@ -23,7 +23,6 @@ body{
         };
         .block-input{
             display: flex;
-            max-width: 350px;
             background-color: #EAEDEE;
             height: 40px;
             margin-top: 10px;
