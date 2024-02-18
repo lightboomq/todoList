@@ -7,6 +7,8 @@ const ol = document.getElementById('todo-list');
 const main = document.querySelector('.main');
 const clearInput = document.querySelector('.clear-input')
 const btnClearAll = document.querySelector('.clear-all');
+const btnScrollToUp = document.querySelector('.imgScrollUp');
+
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
 let tags = [];
@@ -123,6 +125,7 @@ input.addEventListener('input',()=>{
 btnClearAll.addEventListener('click',()=>{
     ol.innerHTML='';
     localStorage.clear();
+    h3.textContent = `0 задач`;
 })
 clearInput.addEventListener('click',()=>{
     input.value = '';
@@ -141,3 +144,18 @@ function firstSymbolToUpperCase(inputValue){
     }
     return str;
 }
+scrollToUp();
+function scrollToUp(){
+    const imgScrollUp = document.querySelector('.imgScrollUp')
+    window.addEventListener('scroll',()=>{
+      if(window.scrollY<=300){
+        imgScrollUp.style.visibility='hidden';
+      }
+      else{
+        imgScrollUp.style.visibility='visible';
+      }
+    });
+    imgScrollUp.addEventListener('click',()=>{
+      window.scroll(0,0)
+    })
+  }

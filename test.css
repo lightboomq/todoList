@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
+  scroll-behavior: smooth;
 }
 
 body .main {
@@ -70,15 +71,16 @@ body .main .clear-all-block {
 }
 body .main .clear-all-block .clear-all {
   all: unset;
-  height: 34px;
+  height: 30px;
   color: white;
   padding: 0 10px 0 10px;
   background-color: #0788af;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 body .main ol {
   display: flex;
+  position: relative;
   justify-content: start;
   flex-direction: column;
   width: 88%;
@@ -90,36 +92,42 @@ body .main ol li {
   font-size: 21px;
   margin-top: 10px;
   cursor: pointer;
+  border-bottom: 1px solid gray;
+}
+body .main ol .imgScrollUp {
+  position: fixed;
+  visibility: hidden;
+  width: 55px;
+  height: 55px;
+  z-index: 99;
+  cursor: pointer;
+  bottom: 15px;
+  margin-left: 30px;
 }
 body .main .block-remove-complete {
   display: flex;
   width: 80%;
-  height: 150px;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 body .main .block-remove-complete .btn-remove {
   all: unset;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35px;
-  background-color: rgb(7, 7, 7);
-  color: white;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  height: 30px;
+  border: 1px solid black;
   width: 100px;
-  margin-left: 5px;
   cursor: pointer;
+  border-radius: 5px;
 }
 body .main .block-remove-complete .btn-complete {
   all: unset;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35px;
-  background-color: rgb(214, 221, 216);
-  border-radius: 10px;
-  margin-bottom: 10px;
+  height: 30px;
+  border: 1px solid black;
   width: 100px;
   cursor: pointer;
+  border-radius: 5px;
 }/*# sourceMappingURL=test.css.map */
