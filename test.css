@@ -60,6 +60,7 @@ body .main ol {
   margin-top: 20px;
   margin-bottom: 20px;
   padding-inline-start: 40px;
+  word-break: break-word;
 }
 body .main ol li {
   font-size: 21px;
