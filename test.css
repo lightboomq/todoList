@@ -4,14 +4,14 @@
 }
 
 body .main {
-  position: relative;
   display: flex;
+  max-width: 700px;
+  position: relative;
   margin: auto;
   flex-direction: column;
   background-color: white;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
   align-items: center;
-  max-width: 400px;
   padding-bottom: 50px;
   border-radius: 10px;
 }
@@ -22,68 +22,52 @@ body .main .block-todoList h3 {
   color: #192C55;
   font-size: 24px;
 }
-body .main .block-input-and-buttonAdd {
+body .main .block-input {
   display: flex;
-  width: 90%;
-}
-body .main .block-input-and-buttonAdd .block-input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  max-width: 350px;
   background-color: #EAEDEE;
-  width: 300px;
   height: 40px;
   margin-top: 10px;
-  margin-right: 70px;
-  border-radius: 10px 0 0 10px;
 }
-body .main .block-input-and-buttonAdd .block-input input {
-  all: unset;
-  width: 200px;
-  height: 40px;
+body .main .block-input input {
   padding-left: 10px;
 }
-body .main .block-input-and-buttonAdd .block-input .clear-input {
-  margin-right: 60px;
+body .main .block-input .clear-input {
   opacity: 0;
   cursor: pointer;
 }
-body .main .block-input-and-buttonAdd .btn-add {
+body .main .block-input .btn-add {
   all: unset;
-  position: absolute;
-  right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-weight: 500;
   color: white;
-  width: 30%;
+  padding: 0 40px 0 40px;
   height: 40px;
-  margin-top: 10px;
   background-color: #FF643A;
   border-radius: 30px;
   cursor: pointer;
 }
-body .main .block-input-and-buttonAdd input::-moz-placeholder {
+body .main .block-input input::-moz-placeholder {
   color: #9D9FA0;
 }
-body .main .block-input-and-buttonAdd input::placeholder {
+body .main .block-input input::placeholder {
   color: #9D9FA0;
 }
 body .main h3 {
   margin-top: 10px;
 }
 body .main ol {
-  width: 350px;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  width: 90%;
   margin-top: 20px;
   margin-bottom: 20px;
-  overflow-wrap: break-word;
+  padding-inline-start: 40px;
 }
 body .main ol li {
   font-size: 21px;
   margin-top: 10px;
   cursor: pointer;
-  list-style-type: none;
 }
 body .main .block-remove-complete {
   display: flex;

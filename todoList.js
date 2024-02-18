@@ -46,7 +46,6 @@ btnAdd.addEventListener('click',()=>{
     tags.push({text:firstSymbolToUpperCase(input.value),pencil:'./pencil.svg'});      
     li = document.createElement('li');
     li.append(tags[tags.length-1].text) 
-    localStorage.setItem('numbering',numbering++);
     ol.append(li)
     localStorageObj=JSON.stringify(tags);
     localStorage.setItem('localStorageObj',localStorageObj)
@@ -125,8 +124,7 @@ clearInput.addEventListener('click',()=>{
     input.value = '';
     clearInput.style.opacity='0';
 })
-let numbering = localStorage.getItem('numbering')?localStorage.getItem('numbering'):1;
-localStorage.setItem('numbering',numbering)
+
 function firstSymbolToUpperCase(inputValue){
     let str='';
     for(let i=0; i<inputValue.length; i++){
@@ -137,5 +135,5 @@ function firstSymbolToUpperCase(inputValue){
             str+=inputValue[i];
         }
     }
-    return numbering+'. '+str;
+    return str;
 }
