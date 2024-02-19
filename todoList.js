@@ -48,7 +48,6 @@ clearInput.addEventListener('click',()=>{
 })
 
 btnAdd.addEventListener('click',()=>{
-    console.log(true);
     if(input.value.length<=3) return;
     if(tags.find(item=>item.text===input.value)) return;
     tags.push({text:firstSymbolToUpperCase(input.value),pencil:'./pencil.svg'});      
