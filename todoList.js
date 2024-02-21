@@ -20,6 +20,7 @@ let strTasks
 cicleByDeclension();
 
 let localStorageObj;
+
 if(localStorage.length>=1){
     tags=JSON.parse(localStorage.getItem('localStorageObj'));
     for(let i=0; i<tags.length; i++){
@@ -41,16 +42,27 @@ clearInput.addEventListener('click',()=>{
     clearInput.style.opacity='0';
 })
 
+input.addEventListener('input',()=>{
+    if(input.value){
+        clearInput.style.opacity='0.5';
+        if(input.value[0]!=input.value[0].toUpperCase()){
+            input.value=input.value[0].toUpperCase();
+        }
+    }
+    else{
+        clearInput.style.opacity='0';
+    }    
+})
 btnAdd.addEventListener('click',()=>{
     if(tags.find(item=>item.text===input.value)||input.value.length<=3) return;
-    tags.push({text:firstSymbolToUpperCase(input.value),pencil:'./pencil.svg'});      
+    tags.push({text:input.value,pencil:'./pencil.svg'});      
     li = document.createElement('li');
-    li.append(tags[tags.length-1].text) 
-    ol.append(li)
+    li.append(tags[tags.length-1].text);
+    ol.append(li);
     localStorageObj=JSON.stringify(tags);
-    localStorage.setItem('localStorageObj',localStorageObj)
+    localStorage.setItem('localStorageObj',localStorageObj);
     keyDeclension++;
-    localStorage.setItem('keyDeclension',keyDeclension)
+    localStorage.setItem('keyDeclension',keyDeclension);
     getTitleTasks();
     input.value = '';
     clearInput.style.opacity='0';
@@ -138,23 +150,7 @@ function getTitleTasks(){
         h3.textContent = `${tags.length} ${strTasks=declension[keyDeclension]}`;
     }
 }
-input.addEventListener('input',()=>{
-    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
-})
 
-
-function firstSymbolToUpperCase(inputValue){
-    let str='';
-    for(let i=0; i<inputValue.length; i++){
-        if(i===0){
-            str+=inputValue[i].toUpperCase();
-        }
-        else{
-            str+=inputValue[i];
-        }
-    }
-    return str;
-}
 scrollToUp();
 function scrollToUp(){
     const imgScrollUp = document.querySelector('.imgScrollUp')
