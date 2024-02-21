@@ -1,7 +1,6 @@
 const h3 = document.getElementById('h3-task');
 const input = document.getElementById('input-task');
 const btnAdd  = document.getElementById('btn-add');
-const blockRemoveComplete = document.querySelector('.block-remove-complete');
 const btnRemove = document.getElementById('btn-remove');
 const btnComplete = document.getElementById('btn-complete');
 const ol = document.getElementById('todo-list');
@@ -9,6 +8,7 @@ const main = document.querySelector('.main');
 const clearInput = document.querySelector('.clear-input')
 const btnClearAll = document.querySelector('.clear-all');
 const btnScrollToUp = document.querySelector('.imgScrollUp');
+const buttonsBlock = document.querySelector('.buttons-block');
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
@@ -16,8 +16,9 @@ let tags = [];
 let strTasks
 
 
+
 cicleByDeclension();
-let li;
+
 let localStorageObj;
 if(localStorage.length>=1){
     tags=JSON.parse(localStorage.getItem('localStorageObj'));
@@ -41,9 +42,7 @@ clearInput.addEventListener('click',()=>{
 })
 
 btnAdd.addEventListener('click',()=>{
-    if(input.value.length<=3) return;
-    
-    if(tags.find(item=>item.text===input.value)) return;
+    if(tags.find(item=>item.text===input.value)||input.value.length<=3) return;
     tags.push({text:firstSymbolToUpperCase(input.value),pencil:'./pencil.svg'});      
     li = document.createElement('li');
     li.append(tags[tags.length-1].text) 
@@ -55,12 +54,11 @@ btnAdd.addEventListener('click',()=>{
     getTitleTasks();
     input.value = '';
     clearInput.style.opacity='0';
-    const mainHeight = main.getBoundingClientRect().height;
-    const heightLi = li.getBoundingClientRect().height;
-    const heightOl = ol.getBoundingClientRect().height;
-
-    main.style.height=`${mainHeight+heightOl}px`;
     visibleButtons();
+    const mainHeight = main.getBoundingClientRect().height;
+    const heightLi = ol.lastChild.getBoundingClientRect().height;
+    main.style.height=`${mainHeight+heightLi+10}px`;
+    localStorage.setItem('mainHeight',mainHeight+heightLi+10);
 });
 
 if(localStorage.getItem('localStorageObj')){
@@ -76,9 +74,8 @@ btnClearAll.addEventListener('click',()=>{
     h3.textContent = `0 задач`;
     tags=[];
     keyDeclension=0;
-    main.style.height = `${250}px`;
-    btnClearAll.style.opacity=0;
-    blockRemoveComplete.style.opacity=0;
+    main.style.height = `${180}px`;
+    hiddenButtons();
 })
 
 ol.addEventListener('click',(e)=>{
@@ -91,8 +88,8 @@ ol.addEventListener('click',(e)=>{
 btnRemove.addEventListener('click',()=>{
     const mainHeight = main.getBoundingClientRect().height;
     const heightLi = ol.lastChild.getBoundingClientRect().height;
-    main.style.height=`${mainHeight-heightLi}px`;
-
+    main.style.height=`${mainHeight-heightLi-10}px`;
+    localStorage.setItem('mainHeight',mainHeight-heightLi-10);
     for(let i=0; i<tags.length; i++){
         if(tags[i].flag){
             tags[i].tag.remove();
@@ -108,8 +105,7 @@ btnRemove.addEventListener('click',()=>{
     getTitleTasks();
 
     if(localStorage.getItem('localStorageObj')==='[]'||!localStorage.getItem('localStorageObj')){
-        btnClearAll.style.opacity=0;
-        blockRemoveComplete.style.opacity=0;
+        hiddenButtons();
     }
 })
 
@@ -184,12 +180,11 @@ function scrollToUp(){
   }
 
 function hiddenButtons(){
-    btnClearAll.style.opacity=0;
-    blockRemoveComplete.style.opacity=0;
+    buttonsBlock.style.opacity=0;
 }
 
 function visibleButtons(){
     li.style.opacity = 1;
-    btnClearAll.style.opacity=1;
-    blockRemoveComplete.style.opacity=1;
+    buttonsBlock.style.opacity=1;
 }
+main.style.height=`${localStorage.getItem('mainHeight')}px`;
