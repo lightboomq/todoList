@@ -43,16 +43,19 @@ clearInput.addEventListener('click',()=>{
 })
 
 input.addEventListener('input',()=>{
-    if(input.value){
-        clearInput.style.opacity='0.5';
-        if(input.value[0]!=input.value[0].toUpperCase()){
-            input.value=input.value[0].toUpperCase();
-        }
+    if(input.value[0]!=input.value[0].toUpperCase()){
+        input.value=input.value[0].toUpperCase();
     }
-    else{
-        clearInput.style.opacity='0';
-    }    
-})
+    // if(input.value){
+    //     clearInput.style.opacity='0.5';
+    //     if(input.value[0]!=input.value[0].toUpperCase()){
+    //         input.value=input.value[0].toUpperCase();
+    //     }
+    // }
+    // else{
+    //     clearInput.style.opacity='0';
+    // }    
+});
 btnAdd.addEventListener('click',()=>{
     if(tags.find(item=>item.text===input.value)||input.value.length<=3) return;
     tags.push({text:input.value,pencil:'./pencil.svg'});      
