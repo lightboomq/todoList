@@ -55,10 +55,6 @@ btnAdd.addEventListener('click',()=>{
     input.value = '';
     clearInput.style.opacity='0';
     visibleButtons();
-    const mainHeight = main.getBoundingClientRect().height;
-    const heightLi = ol.lastChild.getBoundingClientRect().height;
-    main.style.height=`${mainHeight+heightLi+10}px`;
-    localStorage.setItem('mainHeight',mainHeight+heightLi+10);
 });
 
 if(localStorage.getItem('localStorageObj')){
@@ -68,13 +64,13 @@ if(localStorage.getItem('localStorageObj')){
 else{
     hiddenButtons();
 }
+
 btnClearAll.addEventListener('click',()=>{
     ol.innerHTML='';
     localStorage.clear();
     h3.textContent = `0 задач`;
     tags=[];
     keyDeclension=0;
-    main.style.height = `${180}px`;
     hiddenButtons();
 })
 
@@ -86,10 +82,6 @@ ol.addEventListener('click',(e)=>{
 })
 
 btnRemove.addEventListener('click',()=>{
-    const mainHeight = main.getBoundingClientRect().height;
-    const heightLi = ol.lastChild.getBoundingClientRect().height;
-    main.style.height=`${mainHeight-heightLi-10}px`;
-    localStorage.setItem('mainHeight',mainHeight-heightLi-10);
     for(let i=0; i<tags.length; i++){
         if(tags[i].flag){
             tags[i].tag.remove();
@@ -184,7 +176,5 @@ function hiddenButtons(){
 }
 
 function visibleButtons(){
-    li.style.opacity = 1;
     buttonsBlock.style.opacity=1;
 }
-main.style.height=`${localStorage.getItem('mainHeight')}px`;

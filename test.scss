@@ -9,14 +9,12 @@ body{
     .main{
         display: flex;
         max-width: 700px;
-        height: 180px;
         margin: auto;
         flex-direction: column;
         background-color: white;
         box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
         align-items: center;
         border-radius: 10px;
-        transition:height,100ms ease-in-out;
         .block-todoList{
             display: flex;
             h3{
@@ -81,23 +79,24 @@ body{
                 justify-content: center;
                 align-items: center;
                 height: 28px;
-                border: 1px solid black;
-                width: 100px;
+                border: 1px solid black;               
                 cursor: pointer;
                 border-radius: 5px;
                 margin-left: 5px;
+                padding: 0 10px 0 10px;
             }
             .btn-remove{
                 all: unset;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 28px;;
+                height: 28px;
                 border: 1px solid black;   
-                width: 100px;
+                
                 cursor: pointer;
                 border-radius: 5px;
                 margin-left: 5px;
+                padding: 0 10px 0 10px;
             }
         }
         ol{   
@@ -108,6 +107,7 @@ body{
             width: 87%;
             padding: 0 0 0 20px;
             word-break: break-word;
+            margin-bottom: 50px;
             li{
                 font-size: 21px;
                 margin-top: 10px;
