@@ -97,10 +97,10 @@ clearInput.addEventListener('click',()=>{
 })
 
 input.addEventListener('input',()=>{
-    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
     if(input.value[0]!=input.value[0].toUpperCase()){
         input.value=input.value[0].toUpperCase();
     } 
+    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
 });
 // input.addEventListener('input',()=>{
 //    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
