@@ -19,10 +19,11 @@ cicleByDeclension();
 
 let localStorageObj;
 
+
 if(localStorage.length>=1){
     tags=JSON.parse(localStorage.getItem('localStorageObj'));
     for(let i=0; i<tags.length; i++){
-        let li=document.createElement('li');
+        const li=document.createElement('li');
         li.append(tags[i].text);
         if(!tags[i].flag&&!tags[i].flagComplete){
             li.style.color='black';
@@ -33,11 +34,10 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
-
 btnAdd.addEventListener('click',()=>{
-    if(tags.find(item=>item.text===input.value)||input.value.length<=3) return;
+    if(tags.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
     tags.push({text:input.value,flagComplete:true});      
-    let li = document.createElement('li');
+    const li = document.createElement('li');
     li.append(tags[tags.length-1].text);
     ol.append(li);
     localStorageObj=JSON.stringify(tags);
@@ -52,7 +52,7 @@ btnAdd.addEventListener('click',()=>{
 
 
 ol.addEventListener('click',(e)=>{
-    let index = tags.findIndex(item=>item.text===e.target.textContent)
+    const index = tags.findIndex(item=>item.text===e.target.textContent)
     tags[index].tag=e.target
     tags[index].flag=!tags[index].flag,
     tags[index].flagComplete=!tags[index].flagComplete;
@@ -74,15 +74,6 @@ btnComplete.addEventListener('click',()=>{
     localStorage.setItem('localStorageObj',localStorageObj);
 });
 
-
-if(localStorage.getItem('localStorageObj')){
-    visibleButtons();
-    document.querySelectorAll('li').forEach(item=>item.style.opacity=1)
-}
-else{
-    hiddenButtons();
-}
-
 btnClearAll.addEventListener('click',()=>{
     ol.innerHTML='';
     localStorage.clear();
@@ -102,9 +93,6 @@ input.addEventListener('input',()=>{
     } 
     input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
 });
-// input.addEventListener('input',()=>{
-//    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
-// });
 
 btnRemove.addEventListener('click',()=>{
     for(let i=0; i<tags.length; i++){
@@ -120,10 +108,7 @@ btnRemove.addEventListener('click',()=>{
     localStorage.setItem('localStorageObj',localStorageObj)
     cicleByDeclension()
     getTitleTasks();
-
-    if(localStorage.getItem('localStorageObj')==='[]'||!localStorage.getItem('localStorageObj')){
-        hiddenButtons();
-    }
+    hiddenButtons();
 })
 
 function cicleByDeclension(){
@@ -167,9 +152,12 @@ function scrollToUp(){
   }
 
 function hiddenButtons(){
-    buttonsBlock.style.opacity=0;
+    if(localStorage.getItem('localStorageObj')==='[]'||!localStorage.getItem('localStorageObj')){
+        buttonsBlock.style.opacity=0;
+    }
 }
 
 function visibleButtons(){
     buttonsBlock.style.opacity=1;
 }
+hiddenButtons();
