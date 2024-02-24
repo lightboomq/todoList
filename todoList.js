@@ -14,7 +14,7 @@ const declension = {0:'задач', 1:'задача',2:'задачи',3:'зад�
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
 let tags = [];
 let strTasks
-let flagComplete = true;
+
 
 cicleByDeclension();
 
@@ -25,6 +25,7 @@ if(localStorage.length>=1){
     tags=JSON.parse(localStorage.getItem('localStorageObj'));
     for(let i=0; i<tags.length; i++){
         const li=document.createElement('li');
+        li.id=tags[i].text;
         li.append(tags[i].text);
         if(!tags[i].flag&&!tags[i].flagComplete){
             li.style.color='black';
@@ -35,11 +36,13 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
-
+console.log(tags);
+console.log('--------начало---------');
 btnAdd.addEventListener('click',()=>{
     if(tags.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
-    tags.push({text:input.value});      
+    tags.push({flagComplete:true,text:input.value});      
     const li = document.createElement('li');
+    li.id=input.value;
     li.append(tags[tags.length-1].text);
     ol.append(li);
     localStorageObj=JSON.stringify(tags);
@@ -55,27 +58,51 @@ btnAdd.addEventListener('click',()=>{
 
 ol.addEventListener('click',(e)=>{
     const index = tags.findIndex(item=>item.text===e.target.textContent)
-    tags[index].tag=e.target
+    e.target.id = e.target.textContent
     tags[index].flag=!tags[index].flag,
-    tags[index].flagComplete=!flagComplete;
-    tags[index].flag?tags[index].tag.style.color='blue':tags[index].tag.style.color='black';
-    console.log(tags);
+    tags[index].flagComplete=!tags[index].flagComplete;
+
+    if(tags[index].flag){
+        document.getElementById(tags[index].text).style.color='blue';
+    }
+    else{
+        document.getElementById(tags[index].text).style.color='black';
+    }   
 })
 
-btnComplete.addEventListener('click',()=>{
+btnComplete.addEventListener('click',(e)=>{
+
     for(let i=0; i<tags.length; i++){
         if(tags[i].flag){
-            tags[i].tag.style.color='black';
-            tags[i].tag.style.textDecoration='line-through';
-            tags[i].flag=false;    
+            document.getElementById(tags[i].text).style.textDecoration='line-through';
+            document.getElementById(tags[i].text).style.color='black';
+            tags[i].flag=false;  
         }
-        if(tags[i].flagComplete){  
-           tags[i].tag.style.textDecoration='';
+        if(tags[i].flagComplete){
+            document.getElementById(tags[i].text).style.textDecoration='';
         }
     }
     localStorageObj=JSON.stringify(tags);
     localStorage.setItem('localStorageObj',localStorageObj);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 btnClearAll.addEventListener('click',()=>{
     ol.innerHTML='';
