@@ -36,8 +36,7 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
-console.log(tags);
-console.log('--------начало---------');
+
 btnAdd.addEventListener('click',()=>{
     if(tags.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
     tags.push({flagComplete:true,text:input.value});      
@@ -58,7 +57,6 @@ btnAdd.addEventListener('click',()=>{
 
 ol.addEventListener('click',(e)=>{
     const index = tags.findIndex(item=>item.text===e.target.textContent)
-    e.target.id = e.target.textContent
     tags[index].flag=!tags[index].flag,
     tags[index].flagComplete=!tags[index].flagComplete;
 
@@ -124,10 +122,10 @@ input.addEventListener('input',()=>{
     input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
 });
 
-btnRemove.addEventListener('click',()=>{
+btnRemove.addEventListener('click',(e)=>{
     for(let i=0; i<tags.length; i++){
         if(tags[i].flag){
-            tags[i].tag.remove();
+            document.getElementById(tags[i].text).remove();
         }
         getTitleTasks();
     }
