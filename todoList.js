@@ -15,8 +15,6 @@ let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('k
 let tags = [];
 let strTasks
 
-
-
 cicleByDeclension();
 
 let localStorageObj;
@@ -24,8 +22,8 @@ let localStorageObj;
 if(localStorage.length>=1){
     tags=JSON.parse(localStorage.getItem('localStorageObj'));
     for(let i=0; i<tags.length; i++){
-        li=document.createElement('li');
-        li.innerHTML=tags[i].text;
+        let li=document.createElement('li');
+        li.append(tags[i].text);
         if(!tags[i].flag&&!tags[i].flagComplete){
             li.style.color='black';
             li.style.textDecoration='line-through';
@@ -39,7 +37,7 @@ getTitleTasks();
 btnAdd.addEventListener('click',()=>{
     if(tags.find(item=>item.text===input.value)||input.value.length<=3) return;
     tags.push({text:input.value,flagComplete:true});      
-    li = document.createElement('li');
+    let li = document.createElement('li');
     li.append(tags[tags.length-1].text);
     ol.append(li);
     localStorageObj=JSON.stringify(tags);
@@ -59,31 +57,22 @@ ol.addEventListener('click',(e)=>{
     tags[index].flag=!tags[index].flag,
     tags[index].flagComplete=!tags[index].flagComplete;
     tags[index].flag?tags[index].tag.style.color='blue':tags[index].tag.style.color='black';
-    console.log(tags);
 })
-
 
 btnComplete.addEventListener('click',()=>{
     for(let i=0; i<tags.length; i++){
         if(tags[i].flag){
             tags[i].tag.style.color='black';
             tags[i].tag.style.textDecoration='line-through';
-            tags[i].flag=false;
-            tags[i].color='black'
-            tags[i].textDecoration='line-through';      
+            tags[i].flag=false;    
         }
         if(tags[i].flagComplete){  
            tags[i].tag.style.textDecoration='';
         }
     }
-    console.log(tags);
-    localStorageObj=JSON.stringify(tags)
+    localStorageObj=JSON.stringify(tags);
     localStorage.setItem('localStorageObj',localStorageObj);
-    
 });
-
-
-
 
 
 if(localStorage.getItem('localStorageObj')){
@@ -108,13 +97,14 @@ clearInput.addEventListener('click',()=>{
 })
 
 input.addEventListener('input',()=>{
+    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
     if(input.value[0]!=input.value[0].toUpperCase()){
         input.value=input.value[0].toUpperCase();
     } 
 });
-input.addEventListener('input',()=>{
-   input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
-});
+// input.addEventListener('input',()=>{
+//    input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
+// });
 
 btnRemove.addEventListener('click',()=>{
     for(let i=0; i<tags.length; i++){

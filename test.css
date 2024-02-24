@@ -119,6 +119,9 @@ body .main ol li {
   cursor: pointer;
   border-bottom: 1px solid gray;
 }
+body .main ol li img {
+  margin: 0 10px 0 5px;
+}
 body .main ol .imgScrollUp {
   position: fixed;
   visibility: hidden;
