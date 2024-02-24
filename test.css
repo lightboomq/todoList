@@ -115,7 +115,7 @@ body .main ol {
 }
 body .main ol li {
   font-size: 21px;
-  margin-top: 10px;
+  padding-top: 10px;
   cursor: pointer;
   border-bottom: 1px solid gray;
 }

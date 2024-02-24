@@ -53,6 +53,7 @@ btnAdd.addEventListener('click',()=>{
 
 ol.addEventListener('click',(e)=>{
     const index = tags.findIndex(item=>item.text===e.target.textContent)
+    console.log(e.target);
     tags[index].tag=e.target
     tags[index].flag=!tags[index].flag,
     tags[index].flagComplete=!tags[index].flagComplete;
