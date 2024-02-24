@@ -25,10 +25,8 @@ if(localStorage.length>=1){
     tags=JSON.parse(localStorage.getItem('localStorageObj'));
     for(let i=0; i<tags.length; i++){
         li=document.createElement('li');
-        
         li.innerHTML=tags[i].text;
-        
-        if(tags[i].color||tags[i].textDecoration){
+        if(!tags[i].flag&&!tags[i].flagComplete){
             li.style.color='black';
             li.style.textDecoration='line-through';
         }
@@ -37,22 +35,10 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
-clearInput.addEventListener('click',()=>{
-    input.value = '';
-    clearInput.style.opacity='0';
-})
 
-input.addEventListener('input',()=>{
-    if(input.value[0]!=input.value[0].toUpperCase()){
-        input.value=input.value[0].toUpperCase();
-    } 
-});
-input.addEventListener('input',()=>{
-   input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
-});
 btnAdd.addEventListener('click',()=>{
     if(tags.find(item=>item.text===input.value)||input.value.length<=3) return;
-    tags.push({text:input.value,pencil:'./pencil.svg'});      
+    tags.push({text:input.value,flagComplete:true});      
     li = document.createElement('li');
     li.append(tags[tags.length-1].text);
     ol.append(li);
@@ -65,6 +51,40 @@ btnAdd.addEventListener('click',()=>{
     clearInput.style.opacity='0';
     visibleButtons();
 });
+
+
+ol.addEventListener('click',(e)=>{
+    let index = tags.findIndex(item=>item.text===e.target.textContent)
+    tags[index].tag=e.target
+    tags[index].flag=!tags[index].flag,
+    tags[index].flagComplete=!tags[index].flagComplete;
+    tags[index].flag?tags[index].tag.style.color='blue':tags[index].tag.style.color='black';
+    console.log(tags);
+})
+
+
+btnComplete.addEventListener('click',()=>{
+    for(let i=0; i<tags.length; i++){
+        if(tags[i].flag){
+            tags[i].tag.style.color='black';
+            tags[i].tag.style.textDecoration='line-through';
+            tags[i].flag=false;
+            tags[i].color='black'
+            tags[i].textDecoration='line-through';      
+        }
+        if(tags[i].flagComplete){  
+           tags[i].tag.style.textDecoration='';
+        }
+    }
+    console.log(tags);
+    localStorageObj=JSON.stringify(tags)
+    localStorage.setItem('localStorageObj',localStorageObj);
+    
+});
+
+
+
+
 
 if(localStorage.getItem('localStorageObj')){
     visibleButtons();
@@ -82,13 +102,19 @@ btnClearAll.addEventListener('click',()=>{
     keyDeclension=0;
     hiddenButtons();
 })
-
-ol.addEventListener('click',(e)=>{
-    let index = tags.findIndex(item=>item.text===e.target.textContent)
-    tags[index].tag=e.target
-    tags[index].flag=!tags[index].flag,   
-    tags[index].flag?tags[index].tag.style.color='blue':tags[index].tag.style.color='black';
+clearInput.addEventListener('click',()=>{
+    input.value = '';
+    clearInput.style.opacity='0';
 })
+
+input.addEventListener('input',()=>{
+    if(input.value[0]!=input.value[0].toUpperCase()){
+        input.value=input.value[0].toUpperCase();
+    } 
+});
+input.addEventListener('input',()=>{
+   input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
+});
 
 btnRemove.addEventListener('click',()=>{
     for(let i=0; i<tags.length; i++){
@@ -110,20 +136,6 @@ btnRemove.addEventListener('click',()=>{
     }
 })
 
-btnComplete.addEventListener('click',()=>{
-    for(let i=0; i<tags.length; i++){
-        if(tags[i].flag){
-            tags[i].tag.style.color='black';
-            tags[i].tag.style.textDecoration='line-through';
-            tags[i].flag=false;
-            tags[i].color='black'
-            tags[i].textDecoration='line-through';      
-        }
-    }
-    localStorageObj=JSON.stringify(tags)
-    localStorage.setItem('localStorageObj',localStorageObj);
-    
-});
 function cicleByDeclension(){
     for(let i=keyDeclension; i>0; i--){
         if(declension[i]!=='задач'){
