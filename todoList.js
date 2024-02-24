@@ -14,6 +14,7 @@ const declension = {0:'задач', 1:'задача',2:'задачи',3:'зад�
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
 let tags = [];
 let strTasks
+let flagComplete = true;
 
 cicleByDeclension();
 
@@ -34,9 +35,10 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
+
 btnAdd.addEventListener('click',()=>{
     if(tags.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
-    tags.push({text:input.value,flagComplete:true});      
+    tags.push({text:input.value});      
     const li = document.createElement('li');
     li.append(tags[tags.length-1].text);
     ol.append(li);
@@ -53,11 +55,11 @@ btnAdd.addEventListener('click',()=>{
 
 ol.addEventListener('click',(e)=>{
     const index = tags.findIndex(item=>item.text===e.target.textContent)
-    console.log(e.target);
     tags[index].tag=e.target
     tags[index].flag=!tags[index].flag,
-    tags[index].flagComplete=!tags[index].flagComplete;
+    tags[index].flagComplete=!flagComplete;
     tags[index].flag?tags[index].tag.style.color='blue':tags[index].tag.style.color='black';
+    console.log(tags);
 })
 
 btnComplete.addEventListener('click',()=>{
