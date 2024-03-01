@@ -6,26 +6,27 @@ const btnComplete = document.getElementById('btn-complete');
 const ol = document.getElementById('todo-list');
 const main = document.querySelector('.main');
 const clearInput = document.querySelector('.clear-input')
-const btnClearAll = document.querySelector('.clear-all');
+const btnDeleteAll = document.querySelector('.clear-all');
 const btnScrollToUp = document.querySelector('.imgScrollUp');
 const buttonsBlock = document.querySelector('.buttons-block');
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
-let tags = [];
+let tasks= [];
 let strTasks
-
 
 cicleByDeclension();
 
 let localStorageObj;
 if(localStorage.length>=1){
-    tags=JSON.parse(localStorage.getItem('localStorageObj'));
-    for(let i=0; i<tags.length; i++){
+    tasks=JSON.parse(localStorage.getItem('localStorageObj'));
+    for(let i=0; i<tasks.length; i++){
         const li = document.createElement('li');
-        li.id = tags[i].text;
-        li.append(tags[i].text);
-        if(!tags[i].flag&&!tags[i].flagComplete){
+        const img = document.createElement('img');
+        img.src=tasks[i].svg
+        li.id = tasks[i].text;
+        li.append(img,tasks[i].text);
+        if(!tasks[i].flagSelected&&!tasks[i].flagCompleted){
             li.style.color = 'black';
             li.style.textDecoration = 'line-through';
         }
@@ -34,14 +35,19 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
-btnAdd.addEventListener('click',()=>{
-    if(tags.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
-    tags.push({flagComplete:true,text:input.value});      
+btnAdd.addEventListener('click',addTask)
+
+
+function addTask(){
+    if(tasks.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
+    tasks.push({svg:'./p.svg',flagCompleted:true,text:input.value});      
     const li = document.createElement('li');
+    const img = document.createElement('img');
+    img.src=tasks[tasks.length-1].svg
     li.id = input.value;
-    li.append(tags[tags.length-1].text);
+    li.append(img,tasks[tasks.length-1].text);
     ol.append(li);
-    localStorageObj = JSON.stringify(tags);
+    localStorageObj = JSON.stringify(tasks);
     localStorage.setItem('localStorageObj',localStorageObj);
     keyDeclension++;
     localStorage.setItem('keyDeclension',keyDeclension);
@@ -49,38 +55,49 @@ btnAdd.addEventListener('click',()=>{
     input.value = '';
     clearInput.style.opacity = '0';
     visibleButtons();
-});
-
+}
 
 ol.addEventListener('click',(e)=>{
-    const index = tags.findIndex(item=>item.text===e.target.textContent);
-    const getElemById = document.getElementById(tags[index].text);
-    tags[index].flag = !tags[index].flag,
-    tags[index].flagComplete = !tags[index].flagComplete;
-    tags[index].flag? getElemById.style.color = 'blue' : getElemById.style.color = 'black'; 
-})
-
-btnComplete.addEventListener('click',()=>{
-    for(let i=0; i<tags.length; i++){
-        const getElemById = document.getElementById(tags[i].text);
-        if(tags[i].flag){
-            getElemById.style.textDecoration = 'line-through';
-            getElemById.style.color = 'black';
-            tags[i].flag = false;  
-        }
-        if(tags[i].flagComplete){
-            getElemById.style.textDecoration ='';
-        }
+    const index = tasks.findIndex(item=>item.text===e.target.textContent);
+    console.log(index);
+    const getElemById = document.getElementById(tasks[index].text);
+    tasks[index].flagSelected = !tasks[index].flagSelected;
+    tasks[index].flagCompleted = !tasks[index].flagCompleted;
+    tasks[index].flagSelected? getElemById.style.color = 'blue' : getElemById.style.color = 'black';
+    const isHasTasks = tasks.find(task=>task.flagSelected);
+    if(isHasTasks){
+        btnComplete.classList.add('btn-complete-active');
+        btnRemove.classList.add('btn-remove-active');
     }
-    localStorageObj = JSON.stringify(tags);
-    localStorage.setItem('localStorageObj',localStorageObj);
+    else{
+        btnComplete.classList.remove('btn-complete-active');
+        btnRemove.classList.remove('btn-remove-active');
+    }
 });
 
-btnClearAll.addEventListener('click',()=>{
+btnComplete.addEventListener('click',()=>{
+    btnComplete.classList.remove('btn-complete-active');
+    btnRemove.classList.remove('btn-remove-active');
+    for(let i=0; i<tasks.length; i++){
+        const getElemById = document.getElementById(tasks[i].text);
+        if(tasks[i].flagSelected){
+            getElemById.style.textDecoration = 'line-through';
+            getElemById.style.color = 'black';
+            tasks[i].flagSelected = false;  
+        }
+        if(tasks[i].flagCompleted){
+            getElemById.style.textDecoration ='';
+        }
+    };
+    localStorageObj = JSON.stringify(tasks);
+    localStorage.setItem('localStorageObj',localStorageObj);  
+});
+
+btnDeleteAll.addEventListener('click',()=>{
     ol.innerHTML = '';
     localStorage.clear();
     h3.textContent = `0 задач`;
-    tags = [];
+    tasks = [];
     keyDeclension = 0;
     hiddenButtons();
 })
@@ -88,7 +105,6 @@ clearInput.addEventListener('click',()=>{
     input.value = '';
     clearInput.style.opacity = '0';
 })
-
 input.addEventListener('input',()=>{
     if(input.value==='')return;
     if(input.value[0]!=input.value[0].toUpperCase()){
@@ -96,18 +112,22 @@ input.addEventListener('input',()=>{
     } 
     input.value?clearInput.style.opacity='0.5':clearInput.style.opacity='0';
 });
-
-btnRemove.addEventListener('click',(e)=>{
-    for(let i=0; i<tags.length; i++){
-        if(tags[i].flag){
-            document.getElementById(tags[i].text).remove();
+input.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter') addTask();
+})
+btnRemove.addEventListener('click',()=>{
+    btnComplete.classList.remove('btn-complete-active');
+    btnRemove.classList.remove('btn-remove-active');
+    for(let i=0; i<tasks.length; i++){
+        if(tasks[i].flagSelected){
+            document.getElementById(tasks[i].text).remove();
         }
         getTitleTasks();
     }
-    tags = tags.filter(item=>!item.flag)
-    keyDeclension = tags.length;
+    tasks = tasks.filter(item=>!item.flagSelected)
+    keyDeclension = tasks.length;
     localStorage.setItem('keyDeclension',keyDeclension)
-    localStorageObj = JSON.stringify(tags);
+    localStorageObj = JSON.stringify(tasks);
     localStorage.setItem('localStorageObj',localStorageObj)
     cicleByDeclension()
     getTitleTasks();
@@ -125,30 +145,27 @@ function cicleByDeclension(){
     }
 }
 function getTitleTasks(){
-    if(declension[keyDeclension]===undefined&&tags.length===21||tags.length===31){
+    if(declension[keyDeclension]===undefined&&tasks.length===21||tasks.length===31){
         localStorage.setItem('keyDeclension','1')
         keyDeclension=+localStorage.getItem('keyDeclension');
-        h3.textContent = `${tags.length} ${strTasks=declension[keyDeclension]}`
+        h3.textContent = `${tasks.length} ${strTasks=declension[keyDeclension]}`
     }
     else if(declension[keyDeclension]===undefined){;
-        h3.textContent = `${tags.length} ${strTasks}`
+        h3.textContent = `${tasks.length} ${strTasks}`
     }
     else{
-        h3.textContent = `${tags.length} ${strTasks=declension[keyDeclension]}`;
+        h3.textContent = `${tasks.length} ${strTasks=declension[keyDeclension]}`;
     }
 }
 
 scrollToUp();
 function scrollToUp(){
     const imgScrollUp = document.querySelector('.imgScrollUp')
+
     window.addEventListener('scroll',()=>{
-      if(window.scrollY<=300){
-        imgScrollUp.style.visibility='hidden';
-      }
-      else{
-        imgScrollUp.style.visibility='visible';
-      }
+        window.scrollY<=300?imgScrollUp.style.visibility='hidden':imgScrollUp.style.visibility='visible';
     });
+
     imgScrollUp.addEventListener('click',()=>{
       window.scroll(0,0)
     })
@@ -164,3 +181,5 @@ function visibleButtons(){
     buttonsBlock.style.opacity=1;
 }
 hiddenButtons();
+
+

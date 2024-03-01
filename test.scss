@@ -61,20 +61,27 @@ body{
         h3{
             margin-top: 10px;
         }
+        .text{
+            display: flex;
+            width: 90%;
+            h6{
+                font-weight: lighter;
+                color: #9D9FA0;
+            }
+        }
         .buttons-block{
             display: flex;
             margin-top: 10px;
             width: 90%;
             .clear-all{
                 all:unset;
-                height: 30px;
-                color: white;
+                height: 30px;  
                 padding: 0 10px 0 10px;
-                background-color: #0788af;
+                background-color: rgba(78, 175, 199, 0.993);
                 cursor: pointer;
                 border-radius: 5px;
             }
-            .btn-complete{
+            .btns{
                 all: unset;
                 display: flex;
                 justify-content: center;
@@ -86,18 +93,15 @@ body{
                 margin-left: 5px;
                 padding: 0 10px 0 10px;
             }
-            .btn-remove{
-                all: unset;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 28px;
-                border: 1px solid black;   
-                
-                cursor: pointer;
-                border-radius: 5px;
-                margin-left: 5px;
-                padding: 0 10px 0 10px;
+            
+            .btn-complete-active{
+                background-color: #0d9c2c;
+                color: white;
+            }
+           
+            .btn-remove-active{
+                background-color: red;
+                color: white;
             }
         }
         ol{   
@@ -109,6 +113,7 @@ body{
             padding: 0 0 0 20px;
             word-break: break-word;
             margin-bottom: 50px;
+            margin-top:10px;
             li{
                 img{
                     margin: 0 10px 0 5px;
