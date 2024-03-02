@@ -36,23 +36,30 @@ if(localStorage.length>=1){
 getTitleTasks();
 
 let toggleEdit = false;
+let disableEdit = false;
+let disableOl = false;
 edit.addEventListener('click',()=>{
-    const nodes=document.querySelectorAll('li');
-    toggleEdit = !toggleEdit;
-    if(toggleEdit){
-        editBlock.classList.add('edit-block-active');
-        nodes.forEach(node=>node.contentEditable='true');
-    }
-    else{
-        editBlock.classList.remove('edit-block-active');
-        removeСlassesBtns()
-        for(let i=0; i<nodes.length; i++){
-            nodes[i].contentEditable='false';
-            tasks[i].text = nodes[i].textContent;
+    if(!disableEdit){
+        const nodes=document.querySelectorAll('li');
+        toggleEdit = !toggleEdit;
+        disableOl = true;
+        if(toggleEdit){
+            editBlock.classList.add('edit-block-active');
+            nodes.forEach(node=>node.contentEditable='true');
         }
-        localStorageObj = JSON.stringify(tasks);
-        localStorage.setItem('localStorageObj',localStorageObj);
-    }
+        else{
+            disableOl = false;
+            editBlock.classList.remove('edit-block-active');
+            removeСlassesBtns()
+            for(let i=0; i<nodes.length; i++){
+                nodes[i].contentEditable='false';
+                tasks[i].text = nodes[i].textContent;
+                nodes[i].id = nodes[i].textContent;
+            }
+            localStorageObj = JSON.stringify(tasks);
+            localStorage.setItem('localStorageObj',localStorageObj);
+        }
+    } 
 });
 
 btnAdd.addEventListener('click',addTask)
@@ -75,18 +82,23 @@ function addTask(){
     visibleButtons();
 }
 
+
 ol.addEventListener('click',(e)=>{
-    const index = tasks.findIndex(item=>item.text===e.target.textContent);
-    const getElemById = document.getElementById(tasks[index].text);
-    tasks[index].flagSelected = !tasks[index].flagSelected;
-    tasks[index].flagCompleted = !tasks[index].flagCompleted;
-    tasks[index].flagSelected? getElemById.style.color = 'blue' : getElemById.style.color = 'black';
-    const isHasTasks = tasks.find(task=>task.flagSelected);
-    if(isHasTasks){
-        addClassesBtns()
-    }
-    else{
-        removeСlassesBtns()
+    if(!disableOl){
+        disableEdit=true;
+        const index = tasks.findIndex(item=>item.text===e.target.textContent);
+        const getElemById = document.getElementById(tasks[index].text);
+        tasks[index].flagSelected = !tasks[index].flagSelected;
+        tasks[index].flagCompleted = !tasks[index].flagCompleted;
+        tasks[index].flagSelected? getElemById.style.color = 'blue' : getElemById.style.color = 'black';
+        const isHasTasks = tasks.find(task=>task.flagSelected);
+        if(isHasTasks){
+            addClassesBtns()
+        }
+        else{
+            removeСlassesBtns()
+            disableEdit=false;
+        }
     }
 });
 
