@@ -10,7 +10,7 @@ const btnDeleteAll = document.querySelector('.clear-all');
 const btnScrollToUp = document.querySelector('.imgScrollUp');
 const buttonsBlock = document.querySelector('.buttons-block');
 const editBlock = document.querySelector('.edit-block');
-const edit = document.querySelector('.edit');
+let edit = document.querySelector('.edit');
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
@@ -43,18 +43,22 @@ edit.addEventListener('click',()=>{
         const nodes=document.querySelectorAll('li');
         toggleEdit = !toggleEdit;
         disableOl = true;
+        edit.src='./edit-complete.svg';
         if(toggleEdit){
-            editBlock.classList.add('edit-block-active');
-            nodes.forEach(node=>node.contentEditable='true');
+            nodes.forEach(node=>{
+                node.contentEditable='true',
+                node.style.color='#138808'
+            });
         }
         else{
             disableOl = false;
-            editBlock.classList.remove('edit-block-active');
             removeСlassesBtns()
+            edit.src='./p.svg';
             for(let i=0; i<nodes.length; i++){
                 nodes[i].contentEditable='false';
                 tasks[i].text = nodes[i].textContent;
                 nodes[i].id = nodes[i].textContent;
+                nodes[i].style.color = 'black';
             }
             localStorageObj = JSON.stringify(tasks);
             localStorage.setItem('localStorageObj',localStorageObj);
@@ -63,8 +67,6 @@ edit.addEventListener('click',()=>{
 });
 
 btnAdd.addEventListener('click',addTask)
-
-
 function addTask(){
     if(tasks.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
     tasks.push({flagCompleted:true,text:input.value});      
@@ -81,8 +83,6 @@ function addTask(){
     clearInput.style.opacity = '0';
     visibleButtons();
 }
-
-
 ol.addEventListener('click',(e)=>{
     if(!disableOl){
         disableEdit=true;
