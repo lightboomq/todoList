@@ -17,6 +17,20 @@ body .main {
   border-radius: 10px;
   margin-top: 10px;
 }
+body .main .edit-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  border-radius: 10px;
+}
+body .main .edit-block .edit {
+  width: 25px;
+  height: 25px;
+}
+body .main .edit-block-active {
+  background-color: #c9cacc;
+}
 body .main .block-todoList {
   display: flex;
 }
@@ -80,9 +94,10 @@ body .main .buttons-block {
 }
 body .main .buttons-block .clear-all {
   all: unset;
-  height: 30px;
+  height: 28px;
   padding: 0 10px 0 10px;
-  background-color: rgba(78, 175, 199, 0.993);
+  background-color: rgba(44, 32, 214, 0.993);
+  color: white;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -91,12 +106,12 @@ body .main .buttons-block .btns {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 28px;
+  height: 26px;
   border: 1px solid black;
   cursor: pointer;
   border-radius: 5px;
   margin-left: 5px;
-  padding: 0 10px 0 10px;
+  padding: 0 5px 0 5px;
 }
 body .main .buttons-block .btn-complete-active {
   background-color: #0d9c2c;
@@ -122,9 +137,6 @@ body .main ol li {
   padding-top: 10px;
   cursor: pointer;
   border-bottom: 1px solid gray;
-}
-body .main ol li img {
-  margin: 0 10px 0 5px;
 }
 body .main ol .imgScrollUp {
   position: fixed;

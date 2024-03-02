@@ -16,6 +16,21 @@ body{
         align-items: center;
         border-radius: 10px;
         margin-top: 10px;
+        .edit-block{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+
+            border-radius: 10px;
+            .edit{
+                width: 25px;
+                height: 25px;
+            }
+        }
+        .edit-block-active{
+            background-color: #c9cacc;
+        }
         .block-todoList{
             display: flex;
             h3{
@@ -75,9 +90,10 @@ body{
             width: 90%;
             .clear-all{
                 all:unset;
-                height: 30px;  
+                height: 28px;  
                 padding: 0 10px 0 10px;
-                background-color: rgba(78, 175, 199, 0.993);
+                background-color: rgba(44, 32, 214, 0.993);
+                color: white;
                 cursor: pointer;
                 border-radius: 5px;
             }
@@ -86,12 +102,12 @@ body{
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 28px;
+                height: 26px;
                 border: 1px solid black;               
                 cursor: pointer;
                 border-radius: 5px;
                 margin-left: 5px;
-                padding: 0 10px 0 10px;
+                padding: 0 5px 0 5px;
             }
             
             .btn-complete-active{
@@ -115,9 +131,6 @@ body{
             margin-bottom: 50px;
             margin-top:10px;
             li{
-                img{
-                    margin: 0 10px 0 5px;
-                }
                 font-size: 21px;
                 padding-top: 10px;
                 cursor: pointer;

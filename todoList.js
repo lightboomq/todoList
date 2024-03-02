@@ -9,6 +9,8 @@ const clearInput = document.querySelector('.clear-input')
 const btnDeleteAll = document.querySelector('.clear-all');
 const btnScrollToUp = document.querySelector('.imgScrollUp');
 const buttonsBlock = document.querySelector('.buttons-block');
+const editBlock = document.querySelector('.edit-block');
+const edit = document.querySelector('.edit');
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
 let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
@@ -22,10 +24,8 @@ if(localStorage.length>=1){
     tasks=JSON.parse(localStorage.getItem('localStorageObj'));
     for(let i=0; i<tasks.length; i++){
         const li = document.createElement('li');
-        const img = document.createElement('img');
-        img.src=tasks[i].svg
         li.id = tasks[i].text;
-        li.append(img,tasks[i].text);
+        li.append(tasks[i].text);
         if(!tasks[i].flagSelected&&!tasks[i].flagCompleted){
             li.style.color = 'black';
             li.style.textDecoration = 'line-through';
@@ -35,17 +35,35 @@ if(localStorage.length>=1){
 }
 getTitleTasks();
 
+let toggleEdit = false;
+edit.addEventListener('click',()=>{
+    const nodes=document.querySelectorAll('li');
+    toggleEdit = !toggleEdit;
+    if(toggleEdit){
+        editBlock.classList.add('edit-block-active');
+        nodes.forEach(node=>node.contentEditable='true');
+    }
+    else{
+        editBlock.classList.remove('edit-block-active');
+        removeСlassesBtns()
+        for(let i=0; i<nodes.length; i++){
+            nodes[i].contentEditable='false';
+            tasks[i].text = nodes[i].textContent;
+        }
+        localStorageObj = JSON.stringify(tasks);
+        localStorage.setItem('localStorageObj',localStorageObj);
+    }
+});
+
 btnAdd.addEventListener('click',addTask)
 
 
 function addTask(){
     if(tasks.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
-    tasks.push({svg:'./p.svg',flagCompleted:true,text:input.value});      
+    tasks.push({flagCompleted:true,text:input.value});      
     const li = document.createElement('li');
-    const img = document.createElement('img');
-    img.src=tasks[tasks.length-1].svg
     li.id = input.value;
-    li.append(img,tasks[tasks.length-1].text);
+    li.append(tasks[tasks.length-1].text);
     ol.append(li);
     localStorageObj = JSON.stringify(tasks);
     localStorage.setItem('localStorageObj',localStorageObj);
@@ -59,25 +77,21 @@ function addTask(){
 
 ol.addEventListener('click',(e)=>{
     const index = tasks.findIndex(item=>item.text===e.target.textContent);
-    console.log(index);
     const getElemById = document.getElementById(tasks[index].text);
     tasks[index].flagSelected = !tasks[index].flagSelected;
     tasks[index].flagCompleted = !tasks[index].flagCompleted;
     tasks[index].flagSelected? getElemById.style.color = 'blue' : getElemById.style.color = 'black';
     const isHasTasks = tasks.find(task=>task.flagSelected);
     if(isHasTasks){
-        btnComplete.classList.add('btn-complete-active');
-        btnRemove.classList.add('btn-remove-active');
+        addClassesBtns()
     }
     else{
-        btnComplete.classList.remove('btn-complete-active');
-        btnRemove.classList.remove('btn-remove-active');
+        removeСlassesBtns()
     }
 });
 
 btnComplete.addEventListener('click',()=>{
-    btnComplete.classList.remove('btn-complete-active');
-    btnRemove.classList.remove('btn-remove-active');
+    removeСlassesBtns();
     for(let i=0; i<tasks.length; i++){
         const getElemById = document.getElementById(tasks[i].text);
         if(tasks[i].flagSelected){
@@ -116,8 +130,7 @@ input.addEventListener('keydown',(e)=>{
     if(e.key==='Enter') addTask();
 })
 btnRemove.addEventListener('click',()=>{
-    btnComplete.classList.remove('btn-complete-active');
-    btnRemove.classList.remove('btn-remove-active');
+    removeСlassesBtns()
     for(let i=0; i<tasks.length; i++){
         if(tasks[i].flagSelected){
             document.getElementById(tasks[i].text).remove();
@@ -179,6 +192,14 @@ function hiddenButtons(){
 
 function visibleButtons(){
     buttonsBlock.style.opacity=1;
+}
+function addClassesBtns(){
+    btnComplete.classList.add('btn-complete-active');
+    btnRemove.classList.add('btn-remove-active');
+}
+function removeСlassesBtns(){
+    btnComplete.classList.remove('btn-complete-active');
+    btnRemove.classList.remove('btn-remove-active');
 }
 hiddenButtons();
 
