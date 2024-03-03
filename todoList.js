@@ -10,6 +10,8 @@ const btnDeleteAll = document.querySelector('.clear-all');
 const btnScrollToUp = document.querySelector('.imgScrollUp');
 const buttonsBlock = document.querySelector('.buttons-block');
 const editBlock = document.querySelector('.edit-block');
+
+
 let edit = document.querySelector('.edit');
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
@@ -38,9 +40,9 @@ getTitleTasks();
 let toggleEdit = false;
 let disableEdit = false;
 let disableOl = false;
+
 edit.addEventListener('click',()=>{
     if(disableEdit) return;
-    
     const nodes=document.querySelectorAll('li');
     toggleEdit = !toggleEdit;
     disableOl = true;
@@ -48,7 +50,7 @@ edit.addEventListener('click',()=>{
     if(toggleEdit){
         nodes.forEach(node=>{
             node.contentEditable='true',
-            node.style.color='#138808'
+            node.style.color='#138808';
         });
     }
     else{
@@ -58,9 +60,12 @@ edit.addEventListener('click',()=>{
         for(let i=0; i<nodes.length; i++){
             nodes[i].contentEditable='false';
             tasks[i].text = nodes[i].textContent;
+            nodes[i].textContent = tasks[i].text; 
             nodes[i].id = nodes[i].textContent;
             nodes[i].style.color = 'black';
+            if(nodes[i].textContent==='') nodes[i].remove();
         }
+        tasks=tasks.filter(item=>item.text!==''); 
         localStorageObj = JSON.stringify(tasks);
         localStorage.setItem('localStorageObj',localStorageObj);
     }
