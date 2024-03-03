@@ -39,37 +39,38 @@ let toggleEdit = false;
 let disableEdit = false;
 let disableOl = false;
 edit.addEventListener('click',()=>{
-    if(!disableEdit){
-        const nodes=document.querySelectorAll('li');
-        toggleEdit = !toggleEdit;
-        disableOl = true;
-        edit.src='./edit-complete.svg';
-        if(toggleEdit){
-            nodes.forEach(node=>{
-                node.contentEditable='true',
-                node.style.color='#138808'
-            });
+    if(disableEdit) return;
+    
+    const nodes=document.querySelectorAll('li');
+    toggleEdit = !toggleEdit;
+    disableOl = true;
+    edit.src='./edit-complete.svg';
+    if(toggleEdit){
+        nodes.forEach(node=>{
+            node.contentEditable='true',
+            node.style.color='#138808'
+        });
+    }
+    else{
+        disableOl = false;
+        removeСlassesBtns();
+        edit.src='./p.svg';
+        for(let i=0; i<nodes.length; i++){
+            nodes[i].contentEditable='false';
+            tasks[i].text = nodes[i].textContent;
+            nodes[i].id = nodes[i].textContent;
+            nodes[i].style.color = 'black';
         }
-        else{
-            disableOl = false;
-            removeСlassesBtns()
-            edit.src='./p.svg';
-            for(let i=0; i<nodes.length; i++){
-                nodes[i].contentEditable='false';
-                tasks[i].text = nodes[i].textContent;
-                nodes[i].id = nodes[i].textContent;
-                nodes[i].style.color = 'black';
-            }
-            localStorageObj = JSON.stringify(tasks);
-            localStorage.setItem('localStorageObj',localStorageObj);
-        }
-    } 
+        localStorageObj = JSON.stringify(tasks);
+        localStorage.setItem('localStorageObj',localStorageObj);
+    }
+     
 });
 
 btnAdd.addEventListener('click',addTask)
 function addTask(){
-    if(tasks.find(item=>item.text===input.value)||input.value.length<=3||input.value[0]===' ') return;
-    tasks.push({flagCompleted:true,text:input.value});      
+    if(tasks.find(item=>item.text===input.value)||input.value.length<=3) return;
+    tasks.push({flagCompleted:true,text:input.value});    
     const li = document.createElement('li');
     li.id = input.value;
     li.append(tasks[tasks.length-1].text);
@@ -84,25 +85,26 @@ function addTask(){
     visibleButtons();
 }
 ol.addEventListener('click',(e)=>{
-    if(!disableOl){
-        disableEdit=true;
-        const index = tasks.findIndex(item=>item.text===e.target.textContent);
-        const getElemById = document.getElementById(tasks[index].text);
-        tasks[index].flagSelected = !tasks[index].flagSelected;
-        tasks[index].flagCompleted = !tasks[index].flagCompleted;
-        tasks[index].flagSelected? getElemById.style.color = 'blue' : getElemById.style.color = 'black';
-        const isHasTasks = tasks.find(task=>task.flagSelected);
-        if(isHasTasks){
-            addClassesBtns()
-        }
-        else{
-            removeСlassesBtns()
-            disableEdit=false;
-        }
+    if(disableOl) return;
+
+    disableEdit=true;
+    const index = tasks.findIndex(item=>item.text===e.target.textContent);
+    const getElemById = document.getElementById(tasks[index].text);
+    tasks[index].flagSelected = !tasks[index].flagSelected;
+    tasks[index].flagCompleted = !tasks[index].flagCompleted;
+    tasks[index].flagSelected? getElemById.style.color = 'blue' : getElemById.style.color = 'black';
+    const isHasTasks = tasks.find(task=>task.flagSelected);
+    if(isHasTasks){
+        addClassesBtns()
+    }
+    else{
+        removeСlassesBtns()
+        disableEdit=false;
     }
 });
 
 btnComplete.addEventListener('click',()=>{
+    disableEdit=false;
     removeСlassesBtns();
     for(let i=0; i<tasks.length; i++){
         const getElemById = document.getElementById(tasks[i].text);
