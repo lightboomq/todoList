@@ -15,15 +15,15 @@ const editBlock = document.querySelector('.edit-block');
 let edit = document.querySelector('.edit');
 
 const declension = {0:'задач', 1:'задача',2:'задачи',3:'задачи',4:'задачи',5:'задач'};
-let keyDeclension=+localStorage.getItem('keyDeclension')?localStorage.getItem('keyDeclension'):0;
+let valueDeclension=+localStorage.getItem('valueDeclension')?localStorage.getItem('valueDeclension'):0;
 let tasks= [];
 let strTasks
 
 cicleByDeclension();
 
-let localStorageObj;
+let localStorageTasks;
 if(localStorage.length>=1){
-    tasks=JSON.parse(localStorage.getItem('localStorageObj'));
+    tasks=JSON.parse(localStorage.getItem('localStorageTasks'));
     for(let i=0; i<tasks.length; i++){
         const li = document.createElement('li');
         li.id = tasks[i].text;
@@ -63,14 +63,25 @@ edit.addEventListener('click',()=>{
             nodes[i].textContent = tasks[i].text; 
             nodes[i].id = nodes[i].textContent;
             nodes[i].style.color = 'black';
-            if(nodes[i].textContent==='') nodes[i].remove();
+            if(nodes[i].textContent==='') nodes[i].remove();   
         }
         tasks=tasks.filter(item=>item.text!==''); 
-        localStorageObj = JSON.stringify(tasks);
-        localStorage.setItem('localStorageObj',localStorageObj);
-    }
-     
+
+        saveLocalStorageValueDeclension();
+        
+        localStorage.setItem('localStorageTasks',localStorageTasks)
+        
+        localStorageTasks = JSON.stringify(tasks);
+        localStorage.setItem('localStorageTasks',localStorageTasks);
+    } 
 });
+
+function saveLocalStorageValueDeclension(){
+    valueDeclension = tasks.length;
+    localStorage.setItem('valueDeclension',valueDeclension);
+    cicleByDeclension();
+    getTitleTasks();
+}
 
 btnAdd.addEventListener('click',addTask)
 function addTask(){
@@ -80,10 +91,10 @@ function addTask(){
     li.id = input.value;
     li.append(tasks[tasks.length-1].text);
     ol.append(li);
-    localStorageObj = JSON.stringify(tasks);
-    localStorage.setItem('localStorageObj',localStorageObj);
-    keyDeclension++;
-    localStorage.setItem('keyDeclension',keyDeclension);
+    localStorageTasks = JSON.stringify(tasks);
+    localStorage.setItem('localStorageTasks',localStorageTasks);
+    valueDeclension++;
+    localStorage.setItem('valueDeclension',valueDeclension);
     getTitleTasks();
     input.value = '';
     clearInput.style.opacity = '0';
@@ -91,7 +102,6 @@ function addTask(){
 }
 ol.addEventListener('click',(e)=>{
     if(disableOl) return;
-
     disableEdit=true;
     const index = tasks.findIndex(item=>item.text===e.target.textContent);
     const getElemById = document.getElementById(tasks[index].text);
@@ -122,8 +132,8 @@ btnComplete.addEventListener('click',()=>{
             getElemById.style.textDecoration ='';
         }
     };
-    localStorageObj = JSON.stringify(tasks);
-    localStorage.setItem('localStorageObj',localStorageObj);  
+    localStorageTasks = JSON.stringify(tasks);
+    localStorage.setItem('localStorageTasks',localStorageTasks);  
 });
 
 btnDeleteAll.addEventListener('click',()=>{
@@ -131,7 +141,7 @@ btnDeleteAll.addEventListener('click',()=>{
     localStorage.clear();
     h3.textContent = `0 задач`;
     tasks = [];
-    keyDeclension = 0;
+    valueDeclension = 0;
     hiddenButtons();
 })
 clearInput.addEventListener('click',()=>{
@@ -157,17 +167,17 @@ btnRemove.addEventListener('click',()=>{
         getTitleTasks();
     }
     tasks = tasks.filter(item=>!item.flagSelected)
-    keyDeclension = tasks.length;
-    localStorage.setItem('keyDeclension',keyDeclension)
-    localStorageObj = JSON.stringify(tasks);
-    localStorage.setItem('localStorageObj',localStorageObj)
+    valueDeclension = tasks.length;
+    localStorage.setItem('valueDeclension',valueDeclension)
+    localStorageTasks = JSON.stringify(tasks);
+    localStorage.setItem('localStorageTasks',localStorageTasks)
     cicleByDeclension()
     getTitleTasks();
     hiddenButtons();
 })
 
 function cicleByDeclension(){
-    for(let i=keyDeclension; i>0; i--){
+    for(let i=valueDeclension; i>0; i--){
         if(declension[i] !== 'задач'){
             continue;
         }
@@ -177,16 +187,16 @@ function cicleByDeclension(){
     }
 }
 function getTitleTasks(){
-    if(declension[keyDeclension]===undefined&&tasks.length===21||tasks.length===31){
-        localStorage.setItem('keyDeclension','1')
-        keyDeclension=+localStorage.getItem('keyDeclension');
-        h3.textContent = `${tasks.length} ${strTasks=declension[keyDeclension]}`
+    if(declension[valueDeclension]===undefined&&tasks.length===21||tasks.length===31){
+        localStorage.setItem('valueDeclension','1')
+        valueDeclension=+localStorage.getItem('valueDeclension');
+        h3.textContent = `${tasks.length} ${strTasks=declension[valueDeclension]}`
     }
-    else if(declension[keyDeclension]===undefined){;
+    else if(declension[valueDeclension]===undefined){;
         h3.textContent = `${tasks.length} ${strTasks}`
     }
     else{
-        h3.textContent = `${tasks.length} ${strTasks=declension[keyDeclension]}`;
+        h3.textContent = `${tasks.length} ${strTasks=declension[valueDeclension]}`;
     }
 }
 
@@ -204,7 +214,7 @@ function scrollToUp(){
   }
 
 function hiddenButtons(){
-    if(localStorage.getItem('localStorageObj')==='[]'||!localStorage.getItem('localStorageObj')){
+    if(localStorage.getItem('localStorageTasks')==='[]'||!localStorage.getItem('localStorageTasks')){
         buttonsBlock.style.opacity=0;
     }
 }
