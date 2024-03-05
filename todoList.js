@@ -66,17 +66,14 @@ edit.addEventListener('click',()=>{
             if(nodes[i].textContent==='') nodes[i].remove();   
         }
         tasks=tasks.filter(item=>item.text!==''); 
-
-        saveLocalStorageValueDeclension();
-        
-        localStorage.setItem('localStorageTasks',localStorageTasks)
-        
+        uptadeDeclinsionInTitle();
+        localStorage.setItem('localStorageTasks',localStorageTasks);
         localStorageTasks = JSON.stringify(tasks);
         localStorage.setItem('localStorageTasks',localStorageTasks);
     } 
 });
 
-function saveLocalStorageValueDeclension(){
+function uptadeDeclinsionInTitle(){
     valueDeclension = tasks.length;
     localStorage.setItem('valueDeclension',valueDeclension);
     cicleByDeclension();
@@ -159,31 +156,22 @@ input.addEventListener('keydown',(e)=>{
     if(e.key==='Enter') addTask();
 })
 btnRemove.addEventListener('click',()=>{
-    removeСlassesBtns()
+    disableEdit=false;
+    removeСlassesBtns();
     for(let i=0; i<tasks.length; i++){
-        if(tasks[i].flagSelected){
-            document.getElementById(tasks[i].text).remove();
-        }
+        if(tasks[i].flagSelected) document.getElementById(tasks[i].text).remove();
         getTitleTasks();
     }
-    tasks = tasks.filter(item=>!item.flagSelected)
-    valueDeclension = tasks.length;
-    localStorage.setItem('valueDeclension',valueDeclension)
+    tasks = tasks.filter(item=>!item.flagSelected);
     localStorageTasks = JSON.stringify(tasks);
-    localStorage.setItem('localStorageTasks',localStorageTasks)
-    cicleByDeclension()
-    getTitleTasks();
+    localStorage.setItem('localStorageTasks',localStorageTasks);
+    uptadeDeclinsionInTitle();
     hiddenButtons();
 })
-
 function cicleByDeclension(){
     for(let i=valueDeclension; i>0; i--){
-        if(declension[i] !== 'задач'){
-            continue;
-        }
-        else{
-            strTasks = declension[i]
-        }
+        if(declension[i] !== 'задач')continue;    
+        else strTasks = declension[i];
     }
 }
 function getTitleTasks(){
