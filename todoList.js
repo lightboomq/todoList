@@ -26,7 +26,7 @@ if(localStorage.length>=1){
     tasks=JSON.parse(localStorage.getItem('localStorageTasks'));
     for(let i=0; i<tasks.length; i++){
         const li = document.createElement('li');
-        li.id = tasks[i].text;
+        li.id = tasks[i].id;
         li.append(tasks[i].text);
         if(!tasks[i].flagSelected&&!tasks[i].flagCompleted){
             li.style.color = 'black';
@@ -62,7 +62,6 @@ edit.addEventListener('click',()=>{
             nodes[i].contentEditable='false';
             tasks[i].text = nodes[i].textContent;
             nodes[i].textContent = tasks[i].text; 
-            // nodes[i].id = nodes[i].textContent;
             nodes[i].style.color = 'black';
             if(nodes[i].textContent===''){ 
                 nodes[i].remove();
@@ -71,7 +70,6 @@ edit.addEventListener('click',()=>{
         }
         localStorage.setItem('id',id)
         tasks=tasks.filter(item=>item.text!=='');
-        console.log(id);
         uptadeDeclinsionInTitle();
         localStorage.setItem('localStorageTasks',localStorageTasks);
         localStorageTasks = JSON.stringify(tasks);
@@ -90,7 +88,7 @@ btnAdd.addEventListener('click',addTask)
 
 function addTask(){
     if(tasks.find(item=>item.text===input.value)||input.value.length<=3) return;
-    tasks.push({flagCompleted:true,text:input.value,id:id});    
+    tasks.push({flagSelected:false,flagCompleted:true,text:input.value,id:id});    
     const li = document.createElement('li');
     li.id = tasks[id].id;
     li.append(tasks[tasks.length-1].text);
@@ -103,7 +101,6 @@ function addTask(){
     input.value = '';
     clearInput.style.opacity = '0';
     visibleButtons();
-    console.log(`id добавлено: ${id}`);
     id++;
     localStorage.setItem('id',id)
 }
@@ -177,7 +174,7 @@ btnRemove.addEventListener('click',()=>{
         }
         getTitleTasks();
     }
-    localStorage.setItem('id',id)
+    localStorage.setItem('id',id);
     tasks = tasks.filter(item=>!item.flagSelected);
     localStorageTasks = JSON.stringify(tasks);
     localStorage.setItem('localStorageTasks',localStorageTasks);
