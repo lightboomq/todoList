@@ -88,7 +88,7 @@ btnAdd.addEventListener('click',addTask)
 
 function addTask(){
     if(tasks.find(item=>item.text===input.value)||input.value.length<=3) return;
-    tasks.push({flagSelected:false,flagCompleted:true,text:input.value,id:id});    
+    tasks.push({flagCompleted:true,text:input.value,id:id});    
     const li = document.createElement('li');
     li.id = tasks[id].id;
     li.append(tasks[tasks.length-1].text);
@@ -107,7 +107,6 @@ function addTask(){
 ol.addEventListener('click',(e)=>{
     if(disableOl) return;
     disableEdit=true;
-    //const index = tasks.findIndex(item=>item.text===e.target.textContent);
     const index = +e.target.id;
     const getElemById = document.getElementById(index);
     tasks[index].flagSelected = !tasks[index].flagSelected;
