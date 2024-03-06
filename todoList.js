@@ -40,6 +40,7 @@ getTitleTasks();
 let toggleEdit = false;
 let disableEdit = false;
 let disableOl = false;
+let id = +localStorage.getItem('id')?localStorage.getItem('id'):0;
 
 edit.addEventListener('click',()=>{
     if(disableEdit) return;
@@ -61,11 +62,16 @@ edit.addEventListener('click',()=>{
             nodes[i].contentEditable='false';
             tasks[i].text = nodes[i].textContent;
             nodes[i].textContent = tasks[i].text; 
-            nodes[i].id = nodes[i].textContent;
+            // nodes[i].id = nodes[i].textContent;
             nodes[i].style.color = 'black';
-            if(nodes[i].textContent==='') nodes[i].remove();   
+            if(nodes[i].textContent===''){ 
+                nodes[i].remove();
+                id--;
+            };   
         }
-        tasks=tasks.filter(item=>item.text!==''); 
+        localStorage.setItem('id',id)
+        tasks=tasks.filter(item=>item.text!=='');
+        console.log(id);
         uptadeDeclinsionInTitle();
         localStorage.setItem('localStorageTasks',localStorageTasks);
         localStorageTasks = JSON.stringify(tasks);
@@ -81,11 +87,12 @@ function uptadeDeclinsionInTitle(){
 }
 
 btnAdd.addEventListener('click',addTask)
+
 function addTask(){
     if(tasks.find(item=>item.text===input.value)||input.value.length<=3) return;
-    tasks.push({flagCompleted:true,text:input.value});    
+    tasks.push({flagCompleted:true,text:input.value,id:id});    
     const li = document.createElement('li');
-    li.id = input.value;
+    li.id = tasks[id].id;
     li.append(tasks[tasks.length-1].text);
     ol.append(li);
     localStorageTasks = JSON.stringify(tasks);
@@ -96,21 +103,25 @@ function addTask(){
     input.value = '';
     clearInput.style.opacity = '0';
     visibleButtons();
+    console.log(`id добавлено: ${id}`);
+    id++;
+    localStorage.setItem('id',id)
 }
 ol.addEventListener('click',(e)=>{
     if(disableOl) return;
     disableEdit=true;
-    const index = tasks.findIndex(item=>item.text===e.target.textContent);
-    const getElemById = document.getElementById(tasks[index].text);
+    //const index = tasks.findIndex(item=>item.text===e.target.textContent);
+    const index = +e.target.id;
+    const getElemById = document.getElementById(index);
     tasks[index].flagSelected = !tasks[index].flagSelected;
     tasks[index].flagCompleted = !tasks[index].flagCompleted;
     tasks[index].flagSelected? getElemById.style.color = 'blue' : getElemById.style.color = 'black';
     const isHasTasks = tasks.find(task=>task.flagSelected);
     if(isHasTasks){
-        addClassesBtns()
+        addClassesBtns();
     }
     else{
-        removeСlassesBtns()
+        removeСlassesBtns();
         disableEdit=false;
     }
 });
@@ -119,7 +130,7 @@ btnComplete.addEventListener('click',()=>{
     disableEdit=false;
     removeСlassesBtns();
     for(let i=0; i<tasks.length; i++){
-        const getElemById = document.getElementById(tasks[i].text);
+        const getElemById = document.getElementById(tasks[i].id);
         if(tasks[i].flagSelected){
             getElemById.style.textDecoration = 'line-through';
             getElemById.style.color = 'black';
@@ -140,6 +151,7 @@ btnDeleteAll.addEventListener('click',()=>{
     tasks = [];
     valueDeclension = 0;
     hiddenButtons();
+    id=0;
 })
 clearInput.addEventListener('click',()=>{
     input.value = '';
@@ -159,15 +171,21 @@ btnRemove.addEventListener('click',()=>{
     disableEdit=false;
     removeСlassesBtns();
     for(let i=0; i<tasks.length; i++){
-        if(tasks[i].flagSelected) document.getElementById(tasks[i].text).remove();
+        if(tasks[i].flagSelected) {
+            document.getElementById(tasks[i].id).remove();
+            id--;
+        }
         getTitleTasks();
     }
+    localStorage.setItem('id',id)
     tasks = tasks.filter(item=>!item.flagSelected);
     localStorageTasks = JSON.stringify(tasks);
     localStorage.setItem('localStorageTasks',localStorageTasks);
     uptadeDeclinsionInTitle();
     hiddenButtons();
 })
+
+
 function cicleByDeclension(){
     for(let i=valueDeclension; i>0; i--){
         if(declension[i] !== 'задач')continue;    
@@ -190,15 +208,14 @@ function getTitleTasks(){
 
 scrollToUp();
 function scrollToUp(){
-    const imgScrollUp = document.querySelector('.imgScrollUp')
+    const imgScrollUp = document.querySelector('.imgScrollUp');
 
     window.addEventListener('scroll',()=>{
         window.scrollY<=300?imgScrollUp.style.visibility='hidden':imgScrollUp.style.visibility='visible';
     });
-
     imgScrollUp.addEventListener('click',()=>{
       window.scroll(0,0)
-    })
+    });
   }
 
 function hiddenButtons(){
