@@ -87,8 +87,8 @@ function uptadeDeclinsionInTitle(){
 btnAdd.addEventListener('click',addTask)
 
 function addTask(){
-    if(tasks.find(item=>item.text===input.value)||input.value.length<=3) return;
-    tasks.push({flagCompleted:true,text:input.value,id:id});    
+    if(input.value.length<=1) return;
+    tasks.push({flagSelected:false,flagCompleted:true,text:input.value,id:id});    
     const li = document.createElement('li');
     li.id = tasks[id].id;
     li.append(tasks[tasks.length-1].text);
@@ -120,6 +120,7 @@ ol.addEventListener('click',(e)=>{
         removeСlassesBtns();
         disableEdit=false;
     }
+    console.log(tasks);
 });
 
 btnComplete.addEventListener('click',()=>{
